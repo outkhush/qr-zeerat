@@ -129,8 +129,8 @@
             </div>
         </div>
 
-        <div class="qr-section">
-            <div class="qr-code"></div>
+                <div class="qr-section">
+            <div id="qr-code" class="qr-code"></div>
             <div class="qr-instruction">
                 <b>Отсканируйте QR-код</b><br><br>
                 Возьмите с собой дуа, которые читал наш Пророк во время посещения могил!<br><br>
@@ -138,5 +138,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Генерируем QR-код после загрузки страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // URL или текст, который будет закодирован в QR-код
+            const qrData = 'https://zeerat.ru'; // Замените на ваш URL
+
+            // Создаем QR-код
+            new QRCode(document.getElementById("qr-code"), {
+                text: qrData,
+                width: 280,
+                height: 280,
+                colorDark: "#ffffff",
+                colorLight: "#008460",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    </script>
 </body>
 </html>
