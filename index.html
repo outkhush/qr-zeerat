@@ -20,6 +20,7 @@
             position: relative;
             width: 800px;
             height: 1200px;
+            overflow: hidden;
         }
         
         .background {
@@ -31,85 +32,109 @@
             z-index: 1;
         }
         
-        .white-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #008460;
-            border-radius: 40px;
-            z-index: 2;
-        }
-        
         .calligraphy {
             position: absolute;
             width: 700px;
-            height: 228px;
-            left: 50px;
-            top: 54px;
-            background: url('arabic-calligraphy.png') no-repeat;
+            height: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50px;
+            background: url('arabic-calligraphy.png') no-repeat center center;
             background-size: contain;
             z-index: 3;
         }
         
-        .dua-text {
+        .text-container {
             position: absolute;
-            width: 690px;
-            height: 429px;
-            left: 60px;
-            top: 323px;
-            font-family: 'Arial';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 28px;
+            width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 384px;
+            z-index: 3;
             text-align: center;
+        }
+        
+        .dua-rus {
+            font-weight: 700;
+            font-size: 30px;
             color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+        
+        .dua-arab {
+            font-family: 'Lateef', serif;
+            font-size: 37px;
+            color: #FFFFFF;
+            direction: rtl;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .dua-translate {
+            font-size: 16px;
+            color: #FFFFFF;
+            line-height: 1.5;
+            text-align: center;
+        }
+        
+        .qr-section {
+            position: absolute;
+            width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 845px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 3;
         }
         
         .qr-code {
-            position: absolute;
-            width: 377px;
-            height: 377px;
-            left: 37px;
-            top: 786px;
-            background: url('qr-code.png') no-repeat;
+            width: 300px;
+            height: 300px;
+            background: url('qr-code.png') no-repeat center center;
             background-size: contain;
-            z-index: 3;
         }
         
         .qr-instruction {
-            position: absolute;
-            width: 289px;
-            height: 252px;
-            left: 451px;
-            top: 845px;
-            font-family: 'Arial';
-            font-style: normal;
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 28px;
-            text-align: center;
+            width: 350px;
+            font-size: 22px;
             color: #FFFFFF;
-            z-index: 3;
+            line-height: 1.4;
+            text-align: center;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="frame">
         <div class="background"></div>
-        <div class="white-overlay"></div>
         <div class="calligraphy"></div>
-        <div class="dua-text">
-            При входе на кладбище поприветствуйте обитателей могил:<br><br>
-            السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ<br><br>
-            Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
-            Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман! Поистине, мы, если пожелает Аллах, присоединимся к вам. Я прошу Аллаха о благополучии для нас и для вас»
+        
+        <div class="text-container">
+            <div class="dua-rus">
+                При входе на кладбище <br> поприветствуйте обитателей могил:
+            </div>
+                
+            <div class="dua-arab">
+                السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ <br>لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
+            </div>
+            
+            <div class="dua-translate">    
+                Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
+                Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман!<br> Поистине, мы, если пожелает Аллах, присоединимся к вам. Я прошу Аллаха о <br> благополучии для нас и для вас»
+            </div>
         </div>
-        <div class="qr-code"></div>
-        <div class="qr-instruction">
-            Отсканируйте QR-код<br><br>
-            Возьмите с собой дуа, которые читал наш Пророк во время посещения могил! И пусть Всевышний примет ваши поминания!
+        
+        <div class="qr-section">
+            <div class="qr-code"></div>
+            <div class="qr-instruction">
+                <b>Отсканируйте QR-код</b><br><br>
+                Возьмите с собой дуа, которые читал наш Пророк во время посещения могил!<br><br>
+                И пусть Всевышний примет ваши поминания!
+            </div>
         </div>
     </div>
 </body>
