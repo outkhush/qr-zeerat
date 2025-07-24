@@ -3,186 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <title>Дуа при посещении могил</title>
     <style>
         body {
             margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
         
-        .container {
+        .frame {
+            position: relative;
             width: 800px;
             height: 1200px;
-            position: relative;
-            transform-origin: top center;
+            overflow: hidden;
         }
         
-        .content {
+        .background {
+            position: absolute;
             width: 100%;
             height: 100%;
             background: #008460;
             border-radius: 40px;
-            padding: 50px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            z-index: 1;
         }
         
         .calligraphy {
+            position: absolute;
             width: 700px;
             height: 281px;
-            background: #008460 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="700" height="281"></svg>') no-repeat center;
-            margin-bottom: 53px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50px;
+            background: url('arabic-calligraphy.png') no-repeat center center;
+            background-size: contain;
+            z-index: 3;
         }
         
-        .text-block {
+        .text-container {
+            position: absolute;
             width: 700px;
-            color: white;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 384px;
+            z-index: 3;
             text-align: center;
-            margin-bottom: 110px;
         }
         
-        .title {
+        .dua-rus {
+            font-weight: 700;
             font-size: 30px;
-            font-weight: bold;
+            color: #FFFFFF;
             margin-bottom: 20px;
         }
         
-        .arabic {
+        .dua-arab {
             font-family: 'Lateef', serif;
             font-size: 37px;
+            color: #FFFFFF;
             direction: rtl;
             line-height: 1.8;
             margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
         }
         
-        .translation {
+        .dua-translate {
             font-size: 16px;
+            color: #FFFFFF;
             line-height: 1.5;
+            text-align: center;
         }
         
         .qr-section {
+            position: absolute;
             width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 845px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 3;
         }
         
         .qr-code {
             width: 300px;
             height: 300px;
-            background: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: url('qr-code.png') no-repeat center center;
+            background-size: contain;
         }
-        
-        .qr-text {
+
+        .qr-instruction {
             width: 350px;
             font-size: 22px;
-            color: white;
+            color: #FFFFFF;
             line-height: 1.4;
             text-align: center;
-        }
-        
-        @media (max-width: 800px) {
-            .container {
-                transform: scale(0.8);
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                transform: scale(0.6);
-            }
-            
-            .qr-section {
-                flex-direction: column;
-            }
-            
-            .qr-code, .qr-text {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-        }
-        
-        @media (max-width: 400px) {
-            .container {
-                transform: scale(0.5);
-            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="calligraphy"></div>
-            
-            <div class="text-block">
-                <div class="title">
-                    При входе на кладбище <br> поприветствуйте обитателей могил:
-                </div>
+    <div class="frame">
+        <div class="background"></div>
+        <div class="calligraphy"></div>
+        
+        <div class="text-container">
+            <div class="dua-rus">
+                При входе на кладбище <br> поприветствуйте обитателей могил:
+            </div>
                 
-                <div class="arabic">
-                    السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
-                </div>
-                
-                <div class="translation">
-                    Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
-                    Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман! Поистине, мы, если пожелает Аллах, присоединимся к вам. Я прошу Аллаха о благополучии для нас и для вас»
-                </div>
+            <div class="dua-arab">
+                السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ <br>لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
             </div>
             
-            <div class="qr-section">
-                <div class="qr-code" id="qr-code"></div>
-                <div class="qr-text">
-                    <b>Отсканируйте QR-код</b><br><br>
-                    Возьмите с собой дуа, которые читал наш Пророк во время посещения могил!<br><br>
-                    И пусть Всевышний примет ваши поминания!
-                </div>
+            <div class="dua-translate">    
+                Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
+                Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман!<br> Поистине, мы, если пожелает Аллах, присоединимся к вам. Я прошу Аллаха о <br> благополучии для нас и для вас»
+            </div>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-code"></div>
+            <div class="qr-instruction">
+                <b>Отсканируйте QR-код</b><br><br>
+                Возьмите с собой дуа, которые читал наш Пророк во время посещения могил!<br><br>
+                И пусть Всевышний примет ваши поминания!
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Генерация QR-кода
-            new QRCode(document.getElementById("qr-code"), {
-                text: 'https://zeerat.ru',
-                width: 280,
-                height: 280,
-                colorDark: "#008460",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-            
-            // Автоматическое масштабирование
-            function adjustScale() {
-                const container = document.querySelector('.container');
-                const windowWidth = window.innerWidth;
-                const windowHeight = window.innerHeight;
-                
-                const scale = Math.min(
-                    (windowWidth - 40) / 800,
-                    (windowHeight - 40) / 1200,
-                    1
-                );
-                
-                container.style.transform = `scale(${scale})`;
-            }
-            
-            adjustScale();
-            window.addEventListener('resize', adjustScale);
-        });
-    </script>
 </body>
 </html>
