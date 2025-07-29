@@ -4,24 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-            m[i].l = 1 * new Date();
-            for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=103498789', 'ym');
-
-        ym(103498789, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", accurateTrackBounce: true, trackLinks: true });
-    </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/103498789" style="position:absolute; left:-9999px;" alt="" /></div>
-    </noscript>
-    <!-- /Yandex.Metrika counter -->
-
     <title>Дуа при посещении могил</title>
     <style>
         body {
@@ -113,8 +95,10 @@
         .qr-code {
             width: 300px;
             height: 300px;
-            background: url('qr-code.png') no-repeat center center;
-            background-size: contain;
+            background-color: #008460;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .qr-instruction {
@@ -126,6 +110,32 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
+
+    <!-- Яндекс.Метрика -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(103498789, "init", {
+            id: 103498789,
+            clickmap: true,
+            trackLinks: true,
+            accurateTrackBounce: true,
+            webvisor: true,
+            trackHash: true,
+            ecommerce: "dataLayer",
+            params: window.location.search.substring(1)
+        });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/103498789" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+
+    <!-- Библиотека для генерации QR-кода -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 </head>
 
 <body>
@@ -162,24 +172,108 @@
     </div>
 
     <script>
-        // Генерируем QR-код после загрузки страницы
         document.addEventListener('DOMContentLoaded', function () {
-            // URL или текст, который будет закодирован в QR-код
-            const qrData = 'https://zeerat.ru'; // Замените на ваш URL
+            // 1. Определение параметров местоположения
+            const urlParams = new URLSearchParams(window.location.search);
+            const locationData = {
+                city: urlParams.get('city') || 'unknown_city',
+                cemetery: urlParams.get('cemetery') || 'general',
+                placement: urlParams.get('placement') || 'unknown_placement',
+                material: urlParams.get('material') || 'paper',
+                campaign: 'graves_dua_v3'
+            };
 
-            // Создаем QR-код
-            new QRCode(document.getElementById("qr-code"), {
-                text: qrData,
-                width: 280,
-                height: 280,
-                colorDark: "#ffffff",
-                colorLight: "#008460",
-                correctLevel: QRCode.CorrectLevel.H
+            // 2. Генерация уникального ID QR-кода
+            const generateQRId = () => {
+                const locationCode = `${locationData.city.slice(0, 3)}_${locationData.cemetery.slice(0, 3)}`.toUpperCase();
+                return `${locationCode}_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
+            };
+
+            const qrId = generateQRId();
+
+            // 3. Формирование URL с параметрами отслеживания
+            const buildTrackingUrl = () => {
+                const baseUrl = 'https://zeerat.ru';
+                const url = new URL(baseUrl);
+
+                // Стандартные UTM-метки
+                url.searchParams.append('utm_source', 'qr_code');
+                url.searchParams.append('utm_medium', 'print');
+                url.searchParams.append('utm_campaign', locationData.campaign);
+                url.searchParams.append('utm_content', qrId);
+                url.searchParams.append('utm_term', locationData.placement);
+
+                // Дополнительные параметры для аналитики
+                url.searchParams.append('qr_city', locationData.city);
+                url.searchParams.append('qr_cemetery', locationData.cemetery);
+                url.searchParams.append('qr_placement', locationData.placement);
+                url.searchParams.append('qr_material', locationData.material);
+
+                return url.toString();
+            };
+
+            const qrData = buildTrackingUrl();
+
+            // 4. Отправка данных в Яндекс.Метрику
+            ym(103498789, 'params', {
+                qr_id: qrId,
+                qr_city: locationData.city,
+                qr_cemetery: locationData.cemetery,
+                qr_placement: locationData.placement,
+                qr_material: locationData.material,
+                qr_campaign: locationData.campaign,
+                generation_time: new Date().toISOString(),
+                page_url: window.location.href
+            });
+
+            // 5. Генерация QR-кода
+            QRCode.toCanvas(
+                qrData,
+                {
+                    errorCorrectionLevel: 'H',
+                    margin: 1,
+                    color: { dark: '#ffffff', light: '#008460' },
+                    width: 280
+                },
+                function (error, canvas) {
+                    if (error) {
+                        console.error('Ошибка генерации QR-кода:', error);
+                        ym(103498789, 'reachGoal', 'qr_error', {
+                            error: error.message,
+                            location: `${locationData.city}_${locationData.cemetery}`
+                        });
+                        return;
+                    }
+
+                    document.getElementById('qr-code').appendChild(canvas);
+
+                    // Фиксация успешной генерации
+                    ym(103498789, 'reachGoal', 'qr_displayed', {
+                        qr_id: qrId,
+                        location: `${locationData.city}_${locationData.cemetery}`,
+                        placement: locationData.placement,
+                        size: '280x280'
+                    });
+                }
+            );
+
+            // 6. Отправка eCommerce данных
+            ym(103498789, 'ecommerce', 'detail', {
+                qr_id: qrId,
+                products: [{
+                    id: qrId,
+                    name: 'QR Дуа для кладбища',
+                    category: 'islamic_content',
+                    brand: 'Zeerat',
+                    variant: locationData.material,
+                    price: 0,
+                    quantity: 1,
+                    dimension1: locationData.city,
+                    dimension2: locationData.placement
+                }]
             });
         });
     </script>
 </body>
 
 </html>
-
-//test
