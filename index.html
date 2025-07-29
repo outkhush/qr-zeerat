@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=103498789', 'ym');
 
-    ym(103498789, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/103498789" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-    
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date();
+            for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=103498789', 'ym');
+
+        ym(103498789, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", accurateTrackBounce: true, trackLinks: true });
+    </script>
+    <noscript>
+        <div><img src="https://mc.yandex.ru/watch/103498789" style="position:absolute; left:-9999px;" alt="" /></div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
     <title>Дуа при посещении могил</title>
     <style>
         body {
@@ -31,14 +34,14 @@
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
-        
+
         .frame {
             position: relative;
             width: 800px;
             height: 1200px;
             overflow: hidden;
         }
-        
+
         .background {
             position: absolute;
             width: 100%;
@@ -47,7 +50,7 @@
             border-radius: 40px;
             z-index: 1;
         }
-        
+
         .calligraphy {
             position: absolute;
             width: 700px;
@@ -59,7 +62,7 @@
             background-size: contain;
             z-index: 3;
         }
-        
+
         .text-container {
             position: absolute;
             width: 700px;
@@ -69,14 +72,14 @@
             z-index: 3;
             text-align: center;
         }
-        
+
         .dua-rus {
             font-weight: 700;
             font-size: 30px;
             color: #FFFFFF;
             margin-bottom: 20px;
         }
-        
+
         .dua-arab {
             font-family: 'Lateef', serif;
             font-size: 37px;
@@ -87,14 +90,14 @@
             text-align: center;
             width: 100%;
         }
-        
+
         .dua-translate {
             font-size: 16px;
             color: #FFFFFF;
             line-height: 1.5;
             text-align: center;
         }
-        
+
         .qr-section {
             position: absolute;
             width: 700px;
@@ -106,7 +109,7 @@
             align-items: center;
             z-index: 3;
         }
-        
+
         .qr-code {
             width: 300px;
             height: 300px;
@@ -124,27 +127,31 @@
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="frame">
         <div class="background"></div>
         <div class="calligraphy"></div>
-        
+
         <div class="text-container">
             <div class="dua-rus">
                 При входе на кладбище <br> поприветствуйте обитателей могил:
             </div>
-                
+
             <div class="dua-arab">
-                السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ اللَّهُ بِكُمْ <br>لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
+                السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ
+                اللَّهُ بِكُمْ <br>لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
             </div>
-            
-            <div class="dua-translate">    
-                Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
-                Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман!<br> Поистине, мы, если пожелает Аллах, присоединимся к вам. Я прошу Аллаха о <br> благополучии для нас и для вас»
+
+            <div class="dua-translate">
+                Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху
+                бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
+                Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман!<br> Поистине, мы, если пожелает
+                Аллах, присоединимся к вам. Я прошу Аллаха о <br> благополучии для нас и для вас»
             </div>
         </div>
 
-                <div class="qr-section">
+        <div class="qr-section">
             <div id="qr-code" class="qr-code"></div>
             <div class="qr-instruction">
                 <b>Отсканируйте QR-код</b><br><br>
@@ -156,7 +163,7 @@
 
     <script>
         // Генерируем QR-код после загрузки страницы
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // URL или текст, который будет закодирован в QR-код
             const qrData = 'https://zeerat.ru'; // Замените на ваш URL
 
@@ -172,4 +179,7 @@
         });
     </script>
 </body>
+
 </html>
+
+//test
