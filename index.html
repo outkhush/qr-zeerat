@@ -1,161 +1,325 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
-    <title>Генератор пропуска с QR-кодом</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дуа при посещении могил</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+        }
+        .frame {
+            position: relative;
+            width: 800px;
+            height: 1200px;
+            overflow: hidden;
+        }
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #008460;
+            border-radius: 40px;
+            z-index: 1;
+        }
+        .calligraphy {
+            position: absolute;
+            width: 700px;
+            height: 281px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 50px;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3MDAiIGhlaWdodD0iMjgxIiB2aWV3Qm94PSIwIDAgNzAwIDI4MSI+PC9zdmc+') no-repeat center center;
+            background-size: contain;
+            z-index: 3;
+        }
+        .text-container {
+            position: absolute;
+            width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 384px;
+            z-index: 3;
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
         }
-
-        #downloadBtn {
-            margin: 20px 0;
-            padding: 10px 20px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+        .dua-rus {
+            font-weight: 700;
+            font-size: 30px;
+            color: #FFFFFF;
+            margin-bottom: 20px;
+        }
+        .dua-arab {
+            font-family: 'Lateef', serif;
+            font-size: 37px;
+            color: #FFFFFF;
+            direction: rtl;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: center;
+            width: 100%;
+        }
+        .dua-translate {
             font-size: 16px;
+            color: #FFFFFF;
+            line-height: 1.5;
+            text-align: center;
         }
-
-        #downloadBtn:hover {
-            background: #45a049;
+        .qr-section {
+            position: absolute;
+            width: 700px;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 845px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 3;
         }
-
-        #preview {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .qr-code {
+            width: 300px;
+            height: 300px;
+            background-color: #008460;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
-        .container {
-            margin-top: 20px;
+        .qr-instruction {
+            width: 350px;
+            font-size: 22px;
+            color: #FFFFFF;
+            line-height: 1.4;
+            text-align: center;
+        }
+        #download-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 15px;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 9999;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #008460;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <h1>Пропуск с QR-кодом</h1>
-
-    <div class="container">
-        <img id="preview" src="entrance-qr-dua.jpg" alt="Превью пропуска">
+    <div class="frame">
+        <div class="background"></div>
+        <div class="calligraphy"></div>
+        <div class="text-container">
+            <div class="dua-rus">
+                При входе на кладбище <br> поприветствуйте обитателей могил:
+            </div>
+            <div class="dua-arab">
+                السَّلَامُ عَلَيْكُمْ أَهْلَ الدِّيَارِ مِنَ الْمُؤْمِنِينَ وَالْمُسْلِمِينَ، وَإِنَّا إِنْ شَاءَ
+                اللَّهُ بِكُمْ <br>لَاحِقُونَ، أَسْأَلُ اللَّهَ لَنَا وَلَكُمُ الْعَافِيَةَ
+            </div>
+            <div class="dua-translate">
+                Транскрипция: Ас-саляму аляйкум ахля-д-дияри мин аль-му'минина валь-муслимина, ва инна ин шаа Аллаху
+                бикум ляхикун, ас'алю-Ллаха ляна ва лякум аль-афия<br><br>
+                Перевод: «Мир вам, о обитатели этих могил из числа верующих и мусульман!<br> Поистине, мы, если пожелает
+                Аллах, присоединимся к вам. Я прошу Аллаха о <br> благополучии для нас и для вас»
+            </div>
+        </div>
+        <div class="qr-section">
+            <div id="qr-code" class="qr-code">
+                <div class="loader"></div>
+            </div>
+            <div class="qr-instruction">
+                <b>Отсканируйте QR-код</b><br><br>
+                Возьмите с собой дуа, которые читал наш Пророк во время посещения могил!<br><br>
+                И пусть Всевышний примет ваши поминания!
+            </div>
+        </div>
     </div>
 
-    <button id="downloadBtn">Скачать пропуск (300 DPI)</button>
+    <button id="download-btn">Скачать JPG (300 DPI)</button>
 
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const downloadBtn = document.getElementById('downloadBtn');
-            const previewImg = document.getElementById('preview');
+        document.addEventListener('DOMContentLoaded', function() {
+            // Генерация QR-кода
+            QRCode.toCanvas(
+                'https://zeerat.ru',
+                {
+                    errorCorrectionLevel: 'H',
+                    margin: 1,
+                    color: { dark: '#ffffff', light: '#008460' },
+                    width: 280
+                },
+                function(error, canvas) {
+                    const qrContainer = document.getElementById('qr-code');
+                    if (error) {
+                        console.error('QR error:', error);
+                        qrContainer.innerHTML = '<span style="color:white">QR-код</span>';
+                        return;
+                    }
+                    qrContainer.innerHTML = '';
+                    qrContainer.appendChild(canvas);
+                }
+            );
 
-            // Проверяем доступные форматы изображения
-            let imageSrc = 'entrance-qr-dua.jpg';
-            // Если есть TIFF версия, можно использовать ее (но потребуется конвертация)
-
-            // Загружаем основное изображение
-            const img = new Image();
-            img.crossOrigin = 'Anonymous';
-            img.onload = function () {
-                processImage(img);
-            };
-            img.src = imageSrc;
-
-            function processImage(originalImg) {
-                // Создаем canvas с высоким разрешением для 300 DPI
-                const dpi = 300;
-                const scale = dpi / 96; // 96 - стандартный DPI экрана
-
-                const canvas = document.createElement('canvas');
-                canvas.width = originalImg.width * scale;
-                canvas.height = originalImg.height * scale;
-
-                const ctx = canvas.getContext('2d');
-
-                // Устанавливаем высокое качество
-                ctx.imageSmoothingEnabled = true;
-                ctx.imageSmoothingQuality = 'high';
-
-                // Рисуем оригинальное изображение
-                ctx.drawImage(originalImg, 0, 0, canvas.width, canvas.height);
-
-                // Генерируем QR-код
-                generateQR(ctx, canvas, scale);
-
-                // Обновляем превью (в меньшем размере)
-                updatePreview(canvas);
-
-                // Настраиваем кнопку скачивания
-                setupDownload(canvas);
-            }
-
-            function generateQR(ctx, canvas, scale) {
-                // Генерация уникального URL
-                const uniqueParam = Math.random().toString(36).substring(2, 9);
-                const url = `https://zeerat.ru?ref=${uniqueParam}`;
-
-                // Размер QR-кода (в пикселях с учетом масштаба)
-                const qrSize = 1.5 * 300; // 1.5 inch * 300 DPI
-
-                // Создаем временный контейнер для QR-кода
-                const qrContainer = document.createElement('div');
-                new QRCode(qrContainer, {
-                    text: url,
-                    width: qrSize,
-                    height: qrSize,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
+            // Функция для установки DPI в EXIF данных
+            function setDPI(canvas, dpi) {
+                const dpm = dpi * 100 / 2.54; // Конвертация DPI в dots per meter
+                return new Promise((resolve) => {
+                    canvas.toBlob((blob) => {
+                        const reader = new FileReader();
+                        reader.onload = function() {
+                            const arrayBuffer = this.result;
+                            const view = new DataView(arrayBuffer);
+                            
+                            // JPEG APP1 маркер для EXIF
+                            const exifHeader = new Uint8Array([
+                                0xFF, 0xE1, // APP1 маркер
+                                0x00, 0x1C, // Длина данных (28 байт)
+                                0x45, 0x78, 0x69, 0x66, 0x00, 0x00, // "Exif\0\0"
+                                0x49, 0x49, // Little-endian
+                                0x2A, 0x00, // TIFF header
+                                0x08, 0x00, 0x00, 0x00, // Offset to IFD
+                                // IFD0 entries
+                                0x01, 0x00, // Number of entries
+                                // XResolution (0x011A)
+                                0x1A, 0x01, // Tag
+                                0x05, 0x00, // Type = RATIONAL
+                                0x01, 0x00, 0x00, 0x00, // Count
+                                0x1A, 0x00, 0x00, 0x00, // Offset
+                                // YResolution (0x011B)
+                                0x1B, 0x01, // Tag
+                                0x05, 0x00, // Type = RATIONAL
+                                0x01, 0x00, 0x00, 0x00, // Count
+                                0x22, 0x00, 0x00, 0x00, // Offset
+                                // ResolutionUnit (0x0128)
+                                0x28, 0x01, // Tag
+                                0x03, 0x00, // Type = SHORT
+                                0x01, 0x00, 0x00, 0x00, // Count
+                                0x02, 0x00, 0x00, 0x00, // Value = inches
+                                // XResolution value (8 bytes)
+                                0x0A, 0x00, 0x00, 0x00, // Numerator (dpi * 10)
+                                0x01, 0x00, 0x00, 0x00, // Denominator
+                                // YResolution value (8 bytes)
+                                0x0A, 0x00, 0x00, 0x00, // Numerator (dpi * 10)
+                                0x01, 0x00, 0x00, 0x00  // Denominator
+                            ]);
+                            
+                            // Создаем новый буфер с EXIF данными
+                            const newArrayBuffer = new ArrayBuffer(arrayBuffer.byteLength + exifHeader.byteLength);
+                            const newView = new DataView(newArrayBuffer);
+                            
+                            // Копируем оригинальные данные JPEG (без SOI маркера)
+                            for (let i = 2; i < arrayBuffer.byteLength; i++) {
+                                newView.setUint8(i + exifHeader.byteLength - 2, view.getUint8(i));
+                            }
+                            
+                            // Добавляем SOI маркер
+                            newView.setUint8(0, 0xFF);
+                            newView.setUint8(1, 0xD8);
+                            
+                            // Добавляем наш EXIF блок
+                            for (let i = 0; i < exifHeader.byteLength; i++) {
+                                newView.setUint8(i + 2, exifHeader[i]);
+                            }
+                            
+                            // Обновляем числовые значения DPI
+                            const dpiScaled = dpi * 10;
+                            newView.setUint32(0x1A + 2, dpiScaled, true); // XResolution numerator
+                            newView.setUint32(0x22 + 2, dpiScaled, true); // YResolution numerator
+                            
+                            resolve(new Blob([newArrayBuffer], {type: 'image/jpeg'}));
+                        };
+                        reader.readAsArrayBuffer(blob);
+                    }, 'image/jpeg', 0.95);
                 });
-
-                // Получаем QR-код как изображение
-                const qrImg = new Image();
-                qrImg.onload = function () {
-                    // Позиция QR-кода (правый нижний угол с отступами)
-                    const margin = 0.5 * 300; // 0.5 inch * 300 DPI
-                    const x = canvas.width - qrSize - margin;
-                    const y = canvas.height - qrSize - margin;
-
-                    // Рисуем QR-код на основном изображении
-                    ctx.drawImage(qrImg, x, y, qrSize, qrSize);
-
-                    // Обновляем превью после добавления QR-кода
-                    updatePreview(canvas);
-                };
-                qrImg.src = qrContainer.querySelector('canvas').toDataURL();
             }
 
-            function updatePreview(canvas) {
-                // Создаем уменьшенную версию для превью
-                const previewCanvas = document.createElement('canvas');
-                previewCanvas.width = 800;
-                previewCanvas.height = (canvas.height / canvas.width) * 800;
+            // Функция скачивания с правильным DPI
+            async function downloadImage() {
+                const btn = document.getElementById('download-btn');
+                btn.disabled = true;
+                btn.textContent = 'Генерация...';
+                
+                try {
+                    // Динамическая загрузка html2canvas
+                    if (typeof html2canvas === 'undefined') {
+                        await new Promise((resolve, reject) => {
+                            const script = document.createElement('script');
+                            script.src = 'https://html2canvas.hertzen.com/dist/html2canvas.min.js';
+                            script.onload = resolve;
+                            script.onerror = reject;
+                            document.head.appendChild(script);
+                        });
+                    }
 
-                const previewCtx = previewCanvas.getContext('2d');
-                previewCtx.drawImage(canvas, 0, 0, previewCanvas.width, previewCanvas.height);
+                    const scale = 300 / 96; // Коэффициент для 300 DPI
+                    
+                    // Создаем canvas с высоким разрешением
+                    const canvas = await html2canvas(document.querySelector('.frame'), {
+                        scale: scale,
+                        logging: false,
+                        useCORS: true,
+                        allowTaint: true,
+                        backgroundColor: '#008460',
+                        letterRendering: true,
+                        quality: 0.95,
+                        windowWidth: document.querySelector('.frame').scrollWidth * scale,
+                        windowHeight: document.querySelector('.frame').scrollHeight * scale
+                    });
 
-                // Обновляем изображение превью
-                previewImg.src = previewCanvas.toDataURL('image/jpeg', 0.9);
-            }
-
-            function setupDownload(canvas) {
-                downloadBtn.onclick = function () {
-                    // Создаем ссылку для скачивания
+                    // Устанавливаем DPI в EXIF данных
+                    const blob = await setDPI(canvas, 300);
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Создаем и активируем ссылку для скачивания
                     const link = document.createElement('a');
-                    link.download = 'zeerat-pass.jpg';
-                    link.href = canvas.toDataURL('image/jpeg', 1.0);
+                    link.download = 'dua-pri-poseshhenii-mogil-300dpi.jpg';
+                    link.href = url;
+                    
+                    // Временное добавление ссылки в DOM
+                    document.body.appendChild(link);
                     link.click();
-                };
+                    
+                    // Очистка через таймаут
+                    setTimeout(() => {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                    
+                } catch (error) {
+                    console.error('Download error:', error);
+                    alert('Ошибка при генерации изображения. Пожалуйста, попробуйте ещё раз.');
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = 'Скачать JPG (300 DPI)';
+                }
             }
+
+            // Назначаем обработчик кнопки
+            document.getElementById('download-btn').addEventListener('click', downloadImage);
         });
     </script>
 </body>
-
 </html>
